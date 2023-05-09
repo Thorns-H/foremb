@@ -1,6 +1,7 @@
 #!/usr/bin/env foremb
 
 include includes/braille.leo ;
+include includes/helpers.leo ;
 
-"HELLO WORLD! 123"
+"TERMINADO POR AHORA"
 $to_braille
