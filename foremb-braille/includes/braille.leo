@@ -68,7 +68,7 @@ file< file:close "date >> exports/braille.txt\n" file:run
 # del archivo en la terminal.
 : $braille_content
 " - File content:" $. pdrop 10 emit
-"chmod +x ./scripts/show_braille.sh" file:run
+"chmod +x scripts/show_braille.sh" file:run
 "./scripts/show_braille.sh" file:run
 10 emit
 ;
