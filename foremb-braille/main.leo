@@ -2,5 +2,4 @@
 
 include includes/braille.leo ;
 
-"TESTING MAKE DIRECTORY WORD"
-$to_braille
+"ESTO ES UNA PRUEBA" $to_braille
