@@ -1,28 +1,35 @@
 #!/usr/bin/env foremb
 
-# ----- Helpers ------
-
-# Esta palabra nos ayuda a limpiar el pointer stack cuando los
-# caracteres son comparables en Braille.
-: c_ps drop pdrop ;
+include includes/helpers.leo ;
 
 # ----- Variables de Configuración -----
 
 # Esta variable nos sirve para cambiar la ruta del archivo donde
-# se guarda el resultado de la traduccion
-
+# se guarda el resultado de la traduccion.
 "exports/braille.txt" $variable file_name
 : get_file_name file_name $@ ;
 
 # ----- Relacionado a Archivos -----
 
+# Esta palabra se encarga de verificar que el directorio de archivos exista,
+# sino, crea el directorio.
+: $make_directory
+file:exists_directory if dup 1 != { "mkdir exports" file:run } drop
+;
+
+# Esta palabra guarda la letra asociada en Braille en el archivo de
+# texto especificado en la varible "file_name"
 : $save_braille pdup $.
 get_file_name "a" file:open
 file< file:close c_ps
 ;
 
+# Esta palabra elimina todo el contenido del archivo asociado a la variable
+# "file_name".
 : $clear_braille get_file_name "w" file:open file:close ;
 
+# Esta palabra hace uso del operador >> de la terminal, para redirigir el
+# output de la fecha actual en el sistema, al final de cada traducción.
 : $add_date
 get_file_name "a" file:open " | "
 file< file:close "date >> exports/braille.txt\n" file:run
@@ -94,7 +101,7 @@ else { emit }
 
 # Esta palabra se encarga de iterar sobre la palabra
 # y obtener el braille correspondiente.
-: $to_braille
+: $to_braille "exports" $make_directory
 braille_results
 0 while dup $@c dup
 {
